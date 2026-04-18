@@ -1,0 +1,251 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Icon Events — Cyberpunk Design System
+   ============================================================================ */
+
+@theme {
+  /* ── Brand Colors ── */
+  --color-neon-pink: #FF006E;
+  --color-neon-pink-light: #FF3D8F;
+  --color-neon-pink-dark: #CC0058;
+
+  --color-electric-cyan: #00D9FF;
+  --color-electric-cyan-light: #33E1FF;
+  --color-electric-cyan-dark: #00ADCC;
+
+  /* ── Backgrounds ── */
+  --color-bg-primary: #0A0E27;
+  --color-bg-secondary: #1A1F3A;
+  --color-bg-tertiary: #252B4A;
+  --color-bg-elevated: #2A305A;
+
+  /* ── Text ── */
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #A0AEC0;
+  --color-text-muted: #6B7280;
+
+  /* ── Status ── */
+  --color-error: #FF4D6D;
+  --color-success: #2EF2B1;
+  --color-warning: #FFC857;
+
+  /* ── Spacing ── */
+  --spacing-section: 5rem;
+  --spacing-section-sm: 3rem;
+
+  /* ── Radius ── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* ── Fonts ── */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
+
+  /* ── Shadows (neon glow) ── */
+  --shadow-neon-pink: 0 0 20px rgba(255, 0, 110, 0.5);
+  --shadow-neon-cyan: 0 0 20px rgba(0, 217, 255, 0.5);
+  --shadow-neon-pink-strong: 0 0 40px rgba(255, 0, 110, 0.7);
+  --shadow-neon-cyan-strong: 0 0 40px rgba(0, 217, 255, 0.7);
+
+  /* ── Animations ── */
+  --animate-fade-in: fade-in 0.5s ease-in-out;
+  --animate-slide-up: slide-up 0.6s ease-out;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out;
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ── Keyframes ── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 110, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 0, 110, 0.6); }
+}
+
+/* ============================================================================
+   Base Styles
+   ============================================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+  }
+
+  /* Focus visible */
+  *:focus-visible {
+    outline: 2px solid var(--color-electric-cyan);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(0, 217, 255, 0.3);
+    color: var(--color-text-primary);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-bg-tertiary);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neon-pink);
+  }
+}
+
+/* ============================================================================
+   Component Utilities
+   ============================================================================ */
+
+@layer components {
+  .container-custom {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    padding-top: var(--spacing-section-sm);
+    padding-bottom: var(--spacing-section-sm);
+  }
+  @media (min-width: 640px) {
+    .section-padding {
+      padding-top: var(--spacing-section);
+      padding-bottom: var(--spacing-section);
+    }
+  }
+
+  /* ── Neon Glow Effects ── */
+  .neon-glow-pink {
+    box-shadow: var(--shadow-neon-pink);
+  }
+  .neon-glow-cyan {
+    box-shadow: var(--shadow-neon-cyan);
+  }
+  .neon-glow-pink-strong {
+    box-shadow: var(--shadow-neon-pink-strong);
+  }
+  .neon-glow-cyan-strong {
+    box-shadow: var(--shadow-neon-cyan-strong);
+  }
+
+  /* ── Neon Text ── */
+  .neon-text-pink {
+    color: var(--color-neon-pink);
+    text-shadow: 0 0 10px rgba(255, 0, 110, 0.5), 0 0 40px rgba(255, 0, 110, 0.2);
+  }
+  .neon-text-cyan {
+    color: var(--color-electric-cyan);
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.5), 0 0 40px rgba(0, 217, 255, 0.2);
+  }
+
+  /* ── HUD Corner Brackets ── */
+  .hud-corners {
+    position: relative;
+  }
+  .hud-corners::before,
+  .hud-corners::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--color-electric-cyan);
+    pointer-events: none;
+  }
+  .hud-corners::before {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+  .hud-corners::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+  }
+
+  /* ── Glass Card ── */
+  .glass-card {
+    background: rgba(26, 31, 58, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 217, 255, 0.1);
+    border-radius: var(--radius-lg);
+  }
+
+  /* ── Gradient Divider ── */
+  .gradient-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-electric-cyan),
+      var(--color-neon-pink),
+      transparent
+    );
+  }
+
+  /* ── Typography ── */
+  .heading-1 {
+    @apply text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl;
+  }
+  .heading-2 {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl;
+  }
+  .heading-3 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  .body-large {
+    @apply text-lg leading-relaxed;
+    color: var(--color-text-secondary);
+  }
+}
+
+/* ============================================================================
+   Utility Overrides
+   ============================================================================ */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
