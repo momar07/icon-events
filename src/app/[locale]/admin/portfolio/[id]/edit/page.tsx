@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { portfolioRepo } from '@/lib/repositories';
 import { PortfolioForm } from '@/components/admin/portfolio-form';
+import { parseImages } from '@/lib/utils/parse-images';
 
 interface EditPortfolioPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -8,7 +9,7 @@ interface EditPortfolioPageProps {
 
 export default async function EditPortfolioPage({ params }: EditPortfolioPageProps) {
   const { locale, id } = await params;
-  const project = await portfolioRepo.findById(Number(id));
+  const project = await portfolioRepo.getPortfolioProjectById(Number(id));
 
   if (!project) notFound();
 
@@ -26,7 +27,7 @@ export default async function EditPortfolioPage({ params }: EditPortfolioPagePro
           category: project.category,
           clientName: project.clientName,
           clientLogo: project.clientLogo,
-          images: project.images as any,
+          images: parseImages(project.images),
           year: project.year,
           budgetMin: project.budgetMin,
           budgetMax: project.budgetMax,

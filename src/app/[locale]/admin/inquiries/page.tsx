@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Mail, Trash2 } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { inquiriesRepo } from '@/lib/repositories';
 import { cn } from '@/lib/utils/cn';
 
@@ -18,12 +18,12 @@ export default async function AdminInquiriesPage({ params, searchParams }: Inqui
   const { locale } = await params;
   const sp = await searchParams;
   const page = Number(sp.page) || 1;
-  const statusFilter = sp.status;
+  const statusFilter = sp.status as 'new' | 'reviewed' | 'contacted' | undefined;
 
-  const result = await inquiriesRepo.findAll({
+  const result = await inquiriesRepo.listInquiries({
     page,
     limit: 20,
-    status: statusFilter as any,
+    status: statusFilter,
   });
 
   const statuses = ['all', 'new', 'reviewed', 'contacted'];

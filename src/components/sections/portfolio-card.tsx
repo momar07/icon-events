@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Calendar, Users, DollarSign, ArrowUpRight } from 'lucide-react';
+import { parseImages } from '@/lib/utils/parse-images';
 
 interface PortfolioCardProps {
   id: number;
@@ -16,7 +17,7 @@ interface PortfolioCardProps {
   teamSize: number | null;
   budgetDisplay: string | null;
   featured: boolean;
-  images: any[] | null;
+  images: any;
 }
 
 export function PortfolioCard({
@@ -33,8 +34,8 @@ export function PortfolioCard({
 }: PortfolioCardProps) {
   const t = useTranslations('portfolio');
 
-  // Get cover image or first image
-  const coverImage = images?.find((img: any) => img.isCover) || images?.[0];
+  const imageList = parseImages(images);
+  const coverImage = imageList.find((img) => img.isCover) || imageList[0];
 
   return (
     <Link href={`/portfolio/${id}`}>

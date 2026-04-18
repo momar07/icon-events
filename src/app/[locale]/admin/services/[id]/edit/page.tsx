@@ -8,7 +8,7 @@ interface EditServicePageProps {
 
 export default async function EditServicePage({ params }: EditServicePageProps) {
   const { locale, id } = await params;
-  const service = await servicesRepo.findById(Number(id));
+  const service = await servicesRepo.getServiceById(Number(id));
 
   if (!service) notFound();
 

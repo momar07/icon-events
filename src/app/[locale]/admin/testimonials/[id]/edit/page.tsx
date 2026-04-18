@@ -6,7 +6,7 @@ interface Props { params: Promise<{ locale: string; id: string }>; }
 
 export default async function EditTestimonialPage({ params }: Props) {
   const { locale, id } = await params;
-  const item = await testimonialsRepo.findById(Number(id));
+  const item = await testimonialsRepo.getTestimonialById(Number(id));
   if (!item) notFound();
 
   return (

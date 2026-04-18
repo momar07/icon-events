@@ -17,7 +17,7 @@ const statusStyles: Record<string, string> = {
 
 export default async function InquiryDetailPage({ params }: Props) {
   const { locale, id } = await params;
-  const inq = await inquiriesRepo.findById(Number(id));
+  const inq = await inquiriesRepo.getInquiryById(Number(id));
   if (!inq) notFound();
 
   return (

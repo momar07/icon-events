@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { PortfolioCard } from './portfolio-card';
 import { PortfolioFilters } from './portfolio-filters';
@@ -19,7 +19,7 @@ interface Project {
   teamSize: number | null;
   budgetDisplay: string | null;
   featured: boolean;
-  images: any[] | null;
+  images: any;
 }
 
 interface PortfolioGridProps {

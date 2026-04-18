@@ -14,9 +14,9 @@ export default async function AdminTestimonialsPage({ params, searchParams }: Te
   const sp = await searchParams;
   const showDeleted = sp.deleted === 'true';
 
-  const result = showDeleted
-    ? await testimonialsRepo.findAllWithDeleted({ page: 1, limit: 50 })
-    : await testimonialsRepo.findAll({ page: 1, limit: 50 });
+  const data = showDeleted
+    ? await testimonialsRepo.listAllTestimonials(true)
+    : await testimonialsRepo.listAllTestimonials(false);
 
   return (
     <div className="space-y-6">
@@ -46,13 +46,13 @@ export default async function AdminTestimonialsPage({ params, searchParams }: Te
         </div>
       </div>
 
-      {result.data.length === 0 ? (
+      {data.length === 0 ? (
         <div className="rounded-xl border border-electric-cyan/10 bg-[#0d1230] p-12 text-center">
           <p className="text-steel-gray">No testimonials yet</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {result.data.map((item: any) => (
+          {data.map((item: any) => (
             <div
               key={item.id}
               className={cn(

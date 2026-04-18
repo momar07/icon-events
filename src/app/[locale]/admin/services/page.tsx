@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Plus, Pencil, Trash2, RotateCcw } from 'lucide-react';
+import { Plus, Pencil } from 'lucide-react';
 import { servicesRepo } from '@/lib/repositories';
 import { ServiceDeleteBtn } from '@/components/admin/service-delete-btn';
 
@@ -12,11 +12,10 @@ export default async function AdminServicesPage({ params, searchParams }: Servic
   const { locale } = await params;
   const sp = await searchParams;
   const showDeleted = sp.deleted === 'true';
-  const page = Number(sp.page) || 1;
 
-  const result = showDeleted
-    ? await servicesRepo.findAllWithDeleted({ page, limit: 50 })
-    : await servicesRepo.findAll({ page, limit: 50 });
+  const data = showDeleted
+    ? await servicesRepo.listAllServices(true)
+    : await servicesRepo.listAllServices(false);
 
   return (
     <div className="space-y-6">
@@ -50,7 +49,7 @@ export default async function AdminServicesPage({ params, searchParams }: Servic
       </div>
 
       {/* Table */}
-      {result.data.length === 0 ? (
+      {data.length === 0 ? (
         <div className="rounded-xl border border-electric-cyan/10 bg-[#0d1230] p-12 text-center">
           <p className="text-steel-gray">
             {locale === 'ar' ? 'لا توجد خدمات بعد' : 'No services yet'}
@@ -80,7 +79,7 @@ export default async function AdminServicesPage({ params, searchParams }: Servic
                 </tr>
               </thead>
               <tbody className="divide-y divide-electric-cyan/5">
-                {result.data.map((service: any) => (
+                {data.map((service: any) => (
                   <tr key={service.id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="px-5 py-3.5 text-white font-medium">{service.title}</td>
                     <td className="px-5 py-3.5 text-steel-gray hidden md:table-cell">{service.icon || '—'}</td>
@@ -99,11 +98,7 @@ export default async function AdminServicesPage({ params, searchParams }: Servic
                     <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-2">
                         {service.deletedAt ? (
-                          <ServiceDeleteBtn
-                            id={service.id}
-                            action="restore"
-                            locale={locale}
-                          />
+                          <ServiceDeleteBtn id={service.id} action="restore" locale={locale} />
                         ) : (
                           <>
                             <Link
@@ -113,11 +108,7 @@ export default async function AdminServicesPage({ params, searchParams }: Servic
                             >
                               <Pencil className="w-4 h-4" />
                             </Link>
-                            <ServiceDeleteBtn
-                              id={service.id}
-                              action="delete"
-                              locale={locale}
-                            />
+                            <ServiceDeleteBtn id={service.id} action="delete" locale={locale} />
                           </>
                         )}
                       </div>

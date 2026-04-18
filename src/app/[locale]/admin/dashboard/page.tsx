@@ -17,11 +17,11 @@ export default async function AdminDashboardPage({ params }: DashboardPageProps)
 
   const [servicesCount, portfolioCount, testimonialsCount, inquiriesCount, recentInquiries] =
     await Promise.all([
-      servicesRepo.count(),
-      portfolioRepo.count(),
-      testimonialsRepo.count(),
-      inquiriesRepo.count(),
-      inquiriesRepo.findAll({ page: 1, limit: 5 }),
+      servicesRepo.countServices(),
+      portfolioRepo.countPortfolioProjects(),
+      testimonialsRepo.countTestimonials(),
+      inquiriesRepo.countInquiriesByStatus(),
+      inquiriesRepo.listInquiries({ page: 1, limit: 5 }),
     ]);
 
   const stats = [

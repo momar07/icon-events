@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Plus, Pencil, Star } from 'lucide-react';
 import { portfolioRepo } from '@/lib/repositories';
 import { PortfolioDeleteBtn } from '@/components/admin/portfolio-delete-btn';
+import { parseImages } from '@/lib/utils/parse-images';
 
 interface PortfolioPageProps {
   params: Promise<{ locale: string }>;
@@ -14,13 +15,12 @@ export default async function AdminPortfolioPage({ params, searchParams }: Portf
   const showDeleted = sp.deleted === 'true';
   const page = Number(sp.page) || 1;
 
-  const result = showDeleted
-    ? await portfolioRepo.findAllWithDeleted({ page, limit: 50 })
-    : await portfolioRepo.findAll({
-        page,
-        limit: 50,
-        category: sp.category || undefined,
-      });
+  const result = await portfolioRepo.listPortfolioProjects({
+    page,
+    limit: 50,
+    category: sp.category || undefined,
+    includeDeleted: showDeleted,
+  });
 
   return (
     <div className="space-y-6">
@@ -59,7 +59,8 @@ export default async function AdminPortfolioPage({ params, searchParams }: Portf
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {result.data.map((project: any) => {
-            const cover = project.images?.find((img: any) => img.isCover) || project.images?.[0];
+            const imgList = parseImages(project.images);
+            const cover = imgList.find((img) => img.isCover) || imgList[0];
             return (
               <div
                 key={project.id}
