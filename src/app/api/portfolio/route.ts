@@ -13,19 +13,17 @@ import {
 } from '@/lib/utils/api-response';
 import { paginationMeta } from '@/lib/utils/pagination';
 
-// GET /api/portfolio — Public: list with filters + pagination
+// GET /api/portfolio
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const includeDeleted = searchParams.get('includeDeleted') === 'true';
 
-    // If requesting deleted items, must be admin
     if (includeDeleted) {
       const guard = await adminGuard(request);
       if (!guard.authorized) return guard.response;
     }
 
-    // Parse and validate filters
     const filterInput = {
       category: searchParams.get('category') || undefined,
       featured: searchParams.get('featured') || undefined,
@@ -47,7 +45,6 @@ export async function GET(request: NextRequest) {
 
     const meta = paginationMeta(total, parsed.data.page, parsed.data.limit);
 
-    // If requesting categories alongside
     if (searchParams.get('withCategories') === 'true') {
       const categories = await getPortfolioCategories();
       return successResponse({ projects: data, categories }, meta);
@@ -60,7 +57,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/portfolio — Admin: create project
+// POST /api/portfolio
 export async function POST(request: NextRequest) {
   try {
     const guard = await adminGuard(request);
@@ -74,13 +71,8 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Stringify images for JSON column
-    const insertData = {
-      ...parsed.data,
-      images: parsed.data.images ? JSON.stringify(parsed.data.images) : null,
-    };
-
-    const id = await createPortfolioProject(insertData as any);
+    // Don't stringify images — Drizzle handles JSON columns automatically
+    const id = await createPortfolioProject(parsed.data as any);
     return successResponse({ id }, undefined, 201);
   } catch (error) {
     console.error('Create portfolio error:', error);

@@ -16,7 +16,7 @@ import {
 
 type Params = { params: Promise<{ id: string }> };
 
-// GET /api/portfolio/[id] — Public
+// GET /api/portfolio/[id]
 export async function GET(_request: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
@@ -25,8 +25,6 @@ export async function GET(_request: NextRequest, { params }: Params) {
 
     const project = await getPortfolioProjectById(numId);
     if (!project) return notFoundResponse('Project not found');
-
-    // Don't show soft-deleted to public
     if (project.deletedAt) return notFoundResponse('Project not found');
 
     return successResponse(project);
@@ -36,7 +34,7 @@ export async function GET(_request: NextRequest, { params }: Params) {
   }
 }
 
-// PUT /api/portfolio/[id] — Admin
+// PUT /api/portfolio/[id]
 export async function PUT(request: NextRequest, { params }: Params) {
   try {
     const guard = await adminGuard(request);
@@ -51,7 +49,6 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
     const body = await request.json();
 
-    // Handle restore
     if (body._action === 'restore') {
       await restorePortfolioProject(numId);
       return successResponse({ message: 'Project restored' });
@@ -64,12 +61,8 @@ export async function PUT(request: NextRequest, { params }: Params) {
       });
     }
 
-    const updateData = {
-      ...parsed.data,
-      images: parsed.data.images ? JSON.stringify(parsed.data.images) : undefined,
-    };
-
-    await updatePortfolioProject(numId, updateData as any);
+    // Don't stringify images — Drizzle handles JSON columns automatically
+    await updatePortfolioProject(numId, parsed.data as any);
     return successResponse({ message: 'Project updated' });
   } catch (error) {
     console.error('Update portfolio error:', error);
@@ -77,7 +70,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
   }
 }
 
-// DELETE /api/portfolio/[id] — Admin (soft delete)
+// DELETE /api/portfolio/[id]
 export async function DELETE(request: NextRequest, { params }: Params) {
   try {
     const guard = await adminGuard(request);

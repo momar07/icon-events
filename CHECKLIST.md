@@ -157,8 +157,8 @@
 - [x] Settings page (company info editor)
 
 ## Sprint 20 — Testing & Deployment
-- [ ] Unit tests (vitest)
-- [ ] E2E tests (playwright)
+- [x] Unit tests (vitest)
+- [x] E2E tests (playwright)
 - [ ] Production build verification
 - [ ] Performance review
 - [ ] Accessibility review
