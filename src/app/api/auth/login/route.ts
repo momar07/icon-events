@@ -27,13 +27,23 @@ export async function POST(request: NextRequest) {
       return serverErrorResponse('Server configuration error');
     }
 
+    console.log('DEBUG LOGIN:');
+    console.log('  Input email:', email);
+    console.log('  ENV email:', adminEmail);
+    console.log('  Email match:', email.toLowerCase() === adminEmail.toLowerCase());
+    console.log('  Hash length:', adminPasswordHash.length);
+    console.log('  Hash first 10:', adminPasswordHash.substring(0, 10));
+
     if (email.toLowerCase() !== adminEmail.toLowerCase()) {
+      console.log('  REJECTED: email mismatch');
       return errorResponse('Invalid email or password', 401);
     }
 
     // Check password
     const valid = await verifyPassword(password, adminPasswordHash);
+    console.log('  Password valid:', valid);
     if (!valid) {
+      console.log('  REJECTED: password mismatch');
       return errorResponse('Invalid email or password', 401);
     }
 
