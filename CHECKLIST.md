@@ -1,11 +1,10 @@
 # Icon Events — Project Checklist
 
-> Auto-updated by setup scripts. Do not edit manually.
-> Last updated: Script 07-B
+> Last updated: Script 08-FINAL
 
 ---
 
-## Script 01-A: Project Structure & Core Configs
+## Sprint 0 — Project Structure & Core Configs
 - [x] Directory structure created
 - [x] package.json
 - [x] tsconfig.json
@@ -19,7 +18,7 @@
 - [x] .gitignore
 - [x] CHECKLIST.md
 
-## Script 01-B: i18n, Utilities & Type Definitions
+## Sprint 1 — i18n, Auth & Middleware
 - [x] i18n routing config (next-intl)
 - [x] i18n request config
 - [x] i18n navigation helpers
@@ -29,10 +28,8 @@
 - [x] Utility: api-response helpers
 - [x] Utility: pagination helpers
 - [x] Utility: constants
+- [x] Utility: parse-images
 - [x] Type definitions (src/types/index.ts)
-- [x] Test setup file
-
-## Script 01-C: Auth Utilities & Password Script
 - [x] Auth: JWT sign/verify helpers
 - [x] Auth: session helper
 - [x] Auth: cookie helpers
@@ -41,43 +38,44 @@
 - [x] Next.js middleware (route protection)
 - [x] Password hash script (scripts/hash-password.ts)
 
-## Script 02: Database Schema & Seed
+## Sprint 2 — Database Schema & Seed
 - [x] Drizzle schema (all tables)
 - [x] DB connection helper
 - [x] Seed script with companyInfo keys
 - [x] Schema validation tests
 
-## Script 03: Data Access Layer & Validators
+## Sprint 3 — Data Access Layer & Validators
 - [x] Zod validators (all entities)
 - [x] Services repository
 - [x] Portfolio repository
 - [x] Testimonials repository
 - [x] Inquiries repository
 - [x] Company info repository
+- [x] Repository index (re-exports)
 
-## Script 04: API Route Handlers
+## Sprint 4 — API Route Handlers
 - [x] Auth routes (login/logout/me)
-- [x] Services routes (public + admin)
-- [x] Portfolio routes (public + admin)
-- [x] Testimonials routes (public + admin)
-- [x] Inquiries routes (public + admin)
-- [x] Company info routes (public + admin)
+- [x] Services routes
+- [x] Portfolio routes
+- [x] Testimonials routes
+- [x] Inquiries routes
+- [x] Company info routes
 - [x] Upload route (images to DB)
 - [x] Image serving route
 
-## Script 05: SEO & Metadata
+## Sprint 5 — SEO & Metadata
 - [x] SEO utility functions
 - [x] sitemap.ts
 - [x] robots.ts
 - [x] Global metadata setup
 
-## Script 06: Design System & Global CSS
+## Sprint 6 — Design System & Global CSS
 - [x] Cyberpunk CSS variables & globals
 - [x] shadcn/ui component configs
-- [x] Reusable UI components (Button, Input, etc.)
+- [x] Reusable UI components
 - [x] Loading/Error/Empty state components
 
-## Script 07: Layout, Navbar, Footer & Hero
+## Sprint 7 — Layout, Navbar, Footer & Hero
 - [x] Root layout with i18n
 - [x] Locale layout
 - [x] Public layout (navbar + footer)
@@ -87,64 +85,81 @@
 - [x] Hero section
 - [x] Home page
 
-## Script 08: Services Page
+## Sprint 8 — Services Page
 - [x] Services page
 - [x] Service card component
 
-## Script 09: Portfolio Pages
+## Sprint 9 — Portfolio Pages
 - [x] Portfolio grid page
 - [x] Portfolio filters
 - [x] Portfolio detail page
 - [x] Portfolio card component
 
-## Script 10: About Page
-- [ ] About page
+## Sprint 10 — About Page
+- [x] About page
 - [x] Team section
 - [x] Timeline section
 - [x] Stats counter section
 
-## Script 11: Testimonials Section
+## Sprint 11 — Testimonials Section
 - [x] Testimonials carousel/grid
 - [x] Testimonial card component
 - [x] Star rating component
 
-## Script 12: Contact Form & Notifications
+## Sprint 12 — Contact Form
 - [x] Contact form component
 - [x] Form validation (shared Zod)
 - [x] Honeypot field
 - [x] Success/error toasts
 - [ ] Email notification (optional)
 
-## Script 13: Admin Layout & Login
-- [ ] Admin layout with sidebar
+## Sprint 13 — Admin Layout & Login
+- [x] Admin layout with sidebar/topbar
 - [x] Admin login page
-- [ ] File upload component
-- [ ] Admin dashboard page
-- [ ] Stats cards
+- [x] Admin login layout (no shell)
+- [x] Admin redirect (/admin -> dashboard)
+- [x] AdminShell component
+- [x] Sidebar component
+- [x] Topbar component
 
-## Script 14: Admin Portfolio Management
-- [ ] Portfolio list/table
-- [ ] Portfolio create/edit form
-- [ ] Portfolio archive/delete
+## Sprint 14 — Admin Dashboard
+- [x] Dashboard page
+- [x] StatCard component
+- [x] RecentInquiries component
 
-## Script 15: Admin Services Management
-- [ ] Services list/table
-- [ ] Services create/edit form
-- [ ] Services reorder
+## Sprint 15 — Admin Services Management
+- [x] Services list page
+- [x] Service create page
+- [x] Service edit page
+- [x] ServiceForm component
+- [x] ServiceDeleteBtn component
 
-## Script 16: Admin Inquiries Management
-- [ ] Inquiries list/table
-- [ ] Inquiry detail modal
-- [ ] Status update workflow
+## Sprint 16 — Admin Portfolio Management
+- [x] Portfolio list page
+- [x] Portfolio create page
+- [x] Portfolio edit page
+- [x] PortfolioForm component
+- [x] PortfolioDeleteBtn component
+- [x] ImageUpload component
 
-## Script 17: Admin Testimonials & Company Info
-- [ ] Testimonials CRUD
-- [ ] Company info editor
-- [ ] Team members JSON editor
+## Sprint 17 — Admin Testimonials Management
+- [x] Testimonials list page
+- [x] Testimonial create page
+- [x] Testimonial edit page
+- [x] TestimonialForm component
+- [x] TestimonialDeleteBtn component
 
-## Script 18: Testing & Final Polish
-- [ ] Unit tests
-- [ ] E2E tests
+## Sprint 18 — Admin Inquiries Management
+- [x] Inquiries list page
+- [x] Inquiry detail page
+
+## Sprint 19 — Admin Settings
+- [x] Settings page (company info editor)
+
+## Sprint 20 — Testing & Deployment
+- [ ] Unit tests (vitest)
+- [ ] E2E tests (playwright)
+- [ ] Production build verification
 - [ ] Performance review
 - [ ] Accessibility review
-- [ ] Final deployment prep
+- [ ] Final deployment prep\n
