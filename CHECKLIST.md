@@ -1,7 +1,7 @@
 # Icon Events — Project Checklist
 
 > Auto-updated by setup scripts. Do not edit manually.
-> Last updated: Script 05-C
+> Last updated: Script 07-B
 
 ---
 
@@ -88,31 +88,31 @@
 - [x] Home page
 
 ## Script 08: Services Page
-- [ ] Services page
-- [ ] Service card component
+- [x] Services page
+- [x] Service card component
 
 ## Script 09: Portfolio Pages
-- [ ] Portfolio grid page
-- [ ] Portfolio filters
-- [ ] Portfolio detail page
-- [ ] Portfolio card component
+- [x] Portfolio grid page
+- [x] Portfolio filters
+- [x] Portfolio detail page
+- [x] Portfolio card component
 
 ## Script 10: About Page
 - [ ] About page
-- [ ] Team section
-- [ ] Timeline section
-- [ ] Stats counter section
+- [x] Team section
+- [x] Timeline section
+- [x] Stats counter section
 
 ## Script 11: Testimonials Section
-- [ ] Testimonials carousel/grid
-- [ ] Testimonial card component
-- [ ] Star rating component
+- [x] Testimonials carousel/grid
+- [x] Testimonial card component
+- [x] Star rating component
 
 ## Script 12: Contact Form & Notifications
-- [ ] Contact form component
-- [ ] Form validation (shared Zod)
-- [ ] Honeypot field
-- [ ] Success/error toasts
+- [x] Contact form component
+- [x] Form validation (shared Zod)
+- [x] Honeypot field
+- [x] Success/error toasts
 - [ ] Email notification (optional)
 
 ## Script 13: Admin Layout & Login
