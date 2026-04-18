@@ -117,7 +117,7 @@
 
 ## Script 13: Admin Layout & Login
 - [ ] Admin layout with sidebar
-- [ ] Admin login page
+- [x] Admin login page
 - [ ] File upload component
 - [ ] Admin dashboard page
 - [ ] Stats cards

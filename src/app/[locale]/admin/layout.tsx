@@ -1,11 +1,30 @@
-export default function AdminLayout({
-  children,
-}: {
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { verifyToken } from '@/lib/auth';
+import { AdminShell } from '@/components/admin/admin-shell';
+
+interface AdminLayoutProps {
   children: React.ReactNode;
-}) {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function AdminLayout({ children, params }: AdminLayoutProps) {
+  const { locale } = await params;
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
+
+  if (!token) {
+    redirect(`/${locale}/admin/login`);
+  }
+
+  const payload = await verifyToken(token);
+  if (!payload) {
+    redirect(`/${locale}/admin/login`);
+  }
+
   return (
-    <div className="min-h-screen bg-[#0A0E27]">
+    <AdminShell locale={locale} adminEmail={payload.email as string}>
       {children}
-    </div>
+    </AdminShell>
   );
 }
