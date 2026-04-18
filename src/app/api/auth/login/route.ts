@@ -48,4 +48,4 @@ export async function POST(request: NextRequest) {
     console.error('Login error:', error);
     return serverErrorResponse('Login failed');
   }
-}\n
+}
