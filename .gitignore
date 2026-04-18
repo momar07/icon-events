@@ -51,3 +51,4 @@ drizzle/meta
 *.swp
 *.swo
 init-repo.sh
+.aider*
