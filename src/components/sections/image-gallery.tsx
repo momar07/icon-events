@@ -65,9 +65,9 @@ export function ImageGallery({ images, title = '' }: ImageGalleryProps) {
         )}
       </div>
 
-      {/* Thumbnails */}
+      {/* Thumbnails — centered */}
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+        <div className="flex justify-center gap-2 overflow-x-auto pb-2">
           {images.map((img, index) => (
             <button
               key={index}
