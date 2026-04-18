@@ -1,26 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import { Zap, Eye, EyeOff, Loader2 } from 'lucide-react';
 
-interface LoginPageProps {
-  params: Promise<{ locale: string }>;
-}
+export default function AdminLoginPage() {
+  const params = useParams();
+  const locale = (params?.locale as string) || 'en';
 
-export default function AdminLoginPage({ params }: LoginPageProps) {
-  const [locale, setLocale] = useState('en');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  // Resolve locale from params
-  useState(() => {
-    params.then((p) => setLocale(p.locale));
-  });
 
   const t = locale === 'ar'
     ? {
