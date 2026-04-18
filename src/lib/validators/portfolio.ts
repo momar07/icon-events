@@ -20,7 +20,8 @@ export const portfolioImagesSchema = z
     { message: 'Only one image can be set as cover' }
   );
 
-export const createPortfolioSchema = z.object({
+// Base object (without refine) — so .partial() works
+const portfolioBaseSchema = z.object({
   title: z
     .string()
     .min(1, 'Title is required')
@@ -84,7 +85,10 @@ export const createPortfolioSchema = z.object({
   featured: z
     .boolean()
     .default(false),
-}).refine(
+});
+
+// Create schema = base + budget refinement
+export const createPortfolioSchema = portfolioBaseSchema.refine(
   (data) => {
     if (data.budgetMin != null && data.budgetMax != null) {
       return data.budgetMin <= data.budgetMax;
@@ -97,7 +101,8 @@ export const createPortfolioSchema = z.object({
   }
 );
 
-export const updatePortfolioSchema = createPortfolioSchema.partial();
+// Update schema = partial of base (no refine needed for partial updates)
+export const updatePortfolioSchema = portfolioBaseSchema.partial();
 
 // Filters for portfolio listing
 export const portfolioFiltersSchema = z.object({
