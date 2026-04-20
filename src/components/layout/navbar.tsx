@@ -22,14 +22,22 @@ export function Navbar() {
   const locale = useLocale();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastY, setLastY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 20);
+      // Hide navbar on scroll down, show on scroll up
+      if (y > lastY && y > 100) setHidden(true);
+      else setHidden(false);
+      setLastY(y);
+    };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastY]);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
@@ -42,50 +50,59 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed top-0 z-50 w-full transition-all duration-300',
+        'fixed top-0 z-50 w-full transition-all duration-500',
         isScrolled
-          ? 'border-b border-[#252B4A]/50 bg-[#0A0E27]/90 backdrop-blur-xl'
-          : 'bg-transparent'
+          ? 'border-b border-[#252B4A]/30 bg-[#0A0E27]/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
+          : 'bg-transparent',
+        hidden && !isMobileOpen ? '-translate-y-full' : 'translate-y-0'
       )}
     >
-      <nav className="container-custom flex h-16 items-center justify-between md:h-20">
+      <nav className="container-custom flex h-20 items-center justify-between lg:h-24">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-          <Zap size={28} className="text-[#FF006E]" />
-          <span className="text-xl font-bold tracking-tight text-[#F5F7FA]">
+        <Link href="/" className="flex items-center gap-3 transition-all duration-300 hover:scale-105">
+          <div className="relative">
+            <Zap size={32} className="text-[#FF006E]" />
+            <div className="absolute inset-0 blur-lg bg-[#FF006E]/30 rounded-full" />
+          </div>
+          <span className="text-2xl font-bold tracking-tight text-[#F5F7FA]">
             ICON<span className="text-[#FF006E]">.</span>EVENTS
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.key}
               href={link.href}
               className={cn(
-                'relative rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200',
+                'relative rounded-lg px-5 py-2.5 text-sm font-medium tracking-wide transition-all duration-300',
                 isActive(link.href)
-                  ? 'text-[#FF006E]'
-                  : 'text-[#A0AEC0] hover:text-[#F5F7FA] hover:bg-[#1A1F3A]'
+                  ? 'text-[#F5F7FA]'
+                  : 'text-[#A0AEC0] hover:text-[#F5F7FA]'
               )}
             >
               {t(link.key)}
               {isActive(link.href) && (
-                <span className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-[#FF006E]" />
+                <span className="absolute bottom-0 left-1/2 h-[2px] w-8 -translate-x-1/2 rounded-full bg-gradient-to-r from-[#FF006E] to-[#00D9FF]" />
               )}
             </Link>
           ))}
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <LanguageSwitch />
 
-          {/* Mobile toggle */}
+          <Link href="/contact" className="hidden lg:block">
+            <button className="px-6 py-2.5 text-sm font-semibold rounded-full border border-[#FF006E]/50 text-[#FF006E] transition-all duration-300 hover:bg-[#FF006E] hover:text-white hover:shadow-[0_0_20px_rgba(255,0,110,0.4)]">
+              {locale === 'ar' ? 'تواصل معنا' : "Let's Talk"}
+            </button>
+          </Link>
+
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="rounded-lg p-2 text-[#A0AEC0] transition-colors hover:bg-[#1A1F3A] hover:text-[#F5F7FA] md:hidden"
+            className="rounded-lg p-2.5 text-[#A0AEC0] transition-colors hover:bg-[#1A1F3A] hover:text-[#F5F7FA] lg:hidden"
             aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileOpen}
           >
@@ -94,7 +111,6 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       <MobileMenu
         isOpen={isMobileOpen}
         onClose={() => setIsMobileOpen(false)}
