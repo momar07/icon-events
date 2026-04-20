@@ -4,6 +4,7 @@ import { Hero } from '@/components/sections/hero';
 import { ServicesPreview } from '@/components/sections/services-preview';
 import { FeaturedGallery } from '@/components/sections/featured-gallery';
 import { TestimonialsCarousel } from '@/components/sections/testimonials-carousel';
+import { ProcessSection } from '@/components/sections/process-section';
 import { CTASection } from '@/components/sections/cta-section';
 import { portfolioRepo, testimonialsRepo } from '@/lib/repositories';
 
@@ -54,6 +55,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <ServicesPreview />
       {projects.length > 0 && <FeaturedGallery projects={projects} />}
       {testimonials.length > 0 && <TestimonialsCarousel testimonials={testimonials} />}
+      <ProcessSection />
       <CTASection />
     </>
   );
