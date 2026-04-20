@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { Link } from '@/lib/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronDown, Play } from 'lucide-react';
@@ -15,7 +15,6 @@ const stats = [
 ];
 
 export function Hero() {
-  const t = useTranslations('hero');
   const [isVisible, setIsVisible] = useState(false);
   const [activeWord, setActiveWord] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
@@ -31,7 +30,7 @@ export function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  const locale = t('cta_portfolio') === 'أعمالنا' ? 'ar' : 'en';
+  const locale = useLocale();
   const currentWords = locale === 'ar' ? wordsAr : words;
 
   return (
