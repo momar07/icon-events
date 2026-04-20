@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { Link } from '@/lib/i18n/navigation';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ChevronDown, Play } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
 const stats = [
@@ -15,105 +15,112 @@ const stats = [
 ];
 
 export function Hero() {
+  const locale = useLocale();
+  const isAr = locale === 'ar';
   const [isVisible, setIsVisible] = useState(false);
-  const [activeWord, setActiveWord] = useState(0);
-  const heroRef = useRef<HTMLElement>(null);
-
-  const words = ['Spectacular', 'Unforgettable', 'Iconic'];
-  const wordsAr = ['مذهلة', 'لا تُنسى', 'أيقونية'];
 
   useEffect(() => {
     setIsVisible(true);
-    const interval = setInterval(() => {
-      setActiveWord((prev) => (prev + 1) % words.length);
-    }, 3000);
-    return () => clearInterval(interval);
   }, []);
 
-  const locale = useLocale();
-  const currentWords = locale === 'ar' ? wordsAr : words;
-
   return (
-    <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image / Video placeholder */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* ── Video Background ── */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0E27] via-[#111638] to-[#0A0E27]" />
-        {/* Animated orbs */}
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-[#FF006E]/5 blur-[120px] animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#00D9FF]/5 blur-[120px] animate-float" style={{ animationDelay: '3s' }} />
-        {/* Grid overlay */}
-        <div className="absolute inset-0 opacity-[0.03]"
-             style={{ backgroundImage: 'linear-gradient(rgba(0,217,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,217,255,0.3) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          poster=""
+        >
+          <source src="https://api.ha.com.sa/wp-content/uploads/2025/12/banner-video.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/60" />
+        {/* Bottom gradient fade */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E27] via-[#0A0E27]/40 to-transparent" />
         {/* Vignette */}
-        <div className="absolute inset-0 hero-vignette" />
+        <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 200px 80px rgba(0,0,0,0.6)' }} />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container-custom text-center">
-        {/* Label */}
+      {/* ── Content ── */}
+      <div className="relative z-10 container-custom text-center px-4">
+        {/* Tag */}
         <div className={cn(
-          'transition-all duration-1000 delay-200',
+          'transition-all duration-1000 delay-300',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         )}>
-          <span className="section-label inline-block mb-6 px-4 py-2 rounded-full border border-[#00D9FF]/20 bg-[#00D9FF]/5">
-            {locale === 'ar' ? 'نصنع التجارب الاستثنائية' : 'CREATING EXTRAORDINARY EXPERIENCES'}
+          <span className="inline-block mb-8 px-6 py-2.5 rounded-full text-xs font-semibold tracking-[0.2em] uppercase border border-[#00D9FF]/40 text-[#00D9FF] bg-[#00D9FF]/5 backdrop-blur-sm"
+                style={{ textShadow: '0 0 20px rgba(0,217,255,0.5)' }}>
+            {isAr ? 'حلول فعاليات متميزة' : 'Premium Event Solutions'}
           </span>
         </div>
 
-        {/* Main Heading */}
+        {/* Main Heading – line 1 white, line 2 neon red/pink */}
         <h1 className={cn(
-          'heading-display text-[#F5F7FA] mb-6 transition-all duration-1000 delay-500',
+          'mb-6 transition-all duration-1000 delay-500',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         )}>
-          {locale === 'ar' ? 'نحوّل رؤيتك إلى' : 'We Turn Your Vision Into'}
-          <br />
-          <span className="relative inline-block">
-            <span key={activeWord} className="neon-text-pink inline-block animate-fade-in">
-              {currentWords[activeWord]}
-            </span>
+          <span className="block text-white font-bold leading-[1.05] tracking-tight"
+                style={{ fontSize: 'clamp(2.2rem, 6vw, 5.5rem)', fontFamily: "'Inter', sans-serif" }}>
+            {isAr ? 'نصمم تجارب' : 'We Design Experiences'}
           </span>
-          <br />
-          {locale === 'ar' ? 'تجارب' : 'Experiences'}
+          <span className="block font-bold leading-[1.05] tracking-tight mt-2"
+                style={{
+                  fontSize: 'clamp(2.2rem, 6vw, 5.5rem)',
+                  fontFamily: "'Inter', sans-serif",
+                  color: '#FF006E',
+                  textShadow: '0 0 30px rgba(255,0,110,0.6), 0 0 60px rgba(255,0,110,0.3), 0 0 100px rgba(255,0,110,0.15)',
+                }}>
+            {isAr ? 'تُحيي علامتك التجارية' : 'That Bring Your Brand to Life'}
+          </span>
         </h1>
 
         {/* Subtitle */}
         <p className={cn(
-          'body-large text-[#A0AEC0] max-w-2xl mx-auto mb-10 text-balance transition-all duration-1000 delay-700',
+          'text-[#c0c8d8] max-w-2xl mx-auto mb-10 leading-relaxed transition-all duration-1000 delay-700',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        )}>
-          {locale === 'ar'
-            ? 'من المعارض الكبرى إلى المؤتمرات العالمية، نحن نصمم وننفذ فعاليات تترك أثراً لا يُنسى'
-            : 'From grand exhibitions to world-class conferences, we design and execute events that leave a lasting impression'}
+        )}
+           style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.2rem)' }}>
+          {isAr
+            ? 'من المفهوم إلى التنفيذ، نصنع معارض مذهلة وفعاليات لا تُنسى تأسر الجمهور وترتقي بحضور علامتك التجارية'
+            : 'From concept to execution, we create stunning exhibition booths and memorable events that captivate audiences and elevate your brand presence.'}
         </p>
 
         {/* CTAs */}
         <div className={cn(
-          'flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 transition-all duration-1000 delay-900',
+          'flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 transition-all duration-1000 delay-900',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         )}>
           <Link href="/portfolio">
-            <Button variant="primary" size="lg" className="group text-base px-8">
-              {locale === 'ar' ? 'اكتشف أعمالنا' : 'Explore Our Work'}
-              <ArrowRight size={18} className="ml-2 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <button className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-[#FF006E] text-white text-base font-semibold transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,110,0.5)] hover:scale-105">
+              {isAr ? 'اكتشف أعمالنا' : 'View Our Projects'}
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            </button>
           </Link>
           <Link href="/contact">
-            <Button variant="outline" size="lg" className="text-base px-8">
-              {locale === 'ar' ? 'تواصل معنا' : "Let's Connect"}
-            </Button>
+            <button className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg text-base font-semibold border-2 border-[#00D9FF]/60 text-[#00D9FF] transition-all duration-300 hover:bg-[#00D9FF]/10 hover:border-[#00D9FF] hover:shadow-[0_0_20px_rgba(0,217,255,0.3)]"
+                    style={{ textShadow: '0 0 10px rgba(0,217,255,0.3)' }}>
+              {isAr ? 'احصل على عرض سعر' : 'Get a Quote'}
+            </button>
           </Link>
         </div>
 
         {/* Stats */}
         <div className={cn(
-          'grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto transition-all duration-1000 delay-1100',
+          'grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto transition-all duration-1000 delay-1100',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         )}>
           {stats.map((stat, i) => (
             <div key={i} className="text-center group">
-              <div className="heading-2 neon-text mb-1 transition-transform group-hover:scale-110">{stat.value}</div>
-              <div className="text-xs text-[#A0AEC0] uppercase tracking-wider">
-                {locale === 'ar' ? stat.labelAr : stat.labelEn}
+              <div className="text-3xl md:text-4xl font-bold mb-1 transition-transform group-hover:scale-110"
+                   style={{ color: '#00D9FF', textShadow: '0 0 20px rgba(0,217,255,0.4)' }}>
+                {stat.value}
+              </div>
+              <div className="text-xs text-[#8892a8] uppercase tracking-wider">
+                {isAr ? stat.labelAr : stat.labelEn}
               </div>
             </div>
           ))}
@@ -122,14 +129,11 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-        <div className="flex flex-col items-center gap-2 text-[#A0AEC0]">
-          <span className="text-xs uppercase tracking-widest">{locale === 'ar' ? 'اكتشف المزيد' : 'Scroll'}</span>
-          <ChevronDown size={20} className="animate-scroll-hint" />
+        <div className="flex flex-col items-center gap-2 text-[#8892a8]">
+          <span className="text-[10px] uppercase tracking-[0.3em]">{isAr ? 'اكتشف المزيد' : 'Scroll'}</span>
+          <ChevronDown size={18} className="animate-scroll-hint" />
         </div>
       </div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A0E27] to-transparent z-[5]" />
     </section>
   );
 }

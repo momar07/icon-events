@@ -2,6 +2,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { generateMeta } from '@/lib/utils/seo';
 import { Hero } from '@/components/sections/hero';
 import { ServicesPreview } from '@/components/sections/services-preview';
+import { FeaturedGallery } from '@/components/sections/featured-gallery';
 import { PortfolioShowcase } from '@/components/sections/portfolio-showcase';
 import { TestimonialsCarousel } from '@/components/sections/testimonials-carousel';
 import { CTASection } from '@/components/sections/cta-section';
@@ -52,6 +53,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <Hero />
       <ServicesPreview />
+      {projects.length > 0 && <FeaturedGallery projects={projects} />}
       {projects.length > 0 && <PortfolioShowcase projects={projects} />}
       {testimonials.length > 0 && <TestimonialsCarousel testimonials={testimonials} />}
       <CTASection />
